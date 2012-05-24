@@ -1,0 +1,37 @@
+@model MinhaDieta.Models.Usuario
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>Informe o seu nome e sua senha</h2>
+</hgroup>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@using (Html.BeginForm((string)ViewBag.FormAction, "Usuario")) {
+    @Html.ValidationSummary(true, "O login não ocorreu. Por favor tente novamente.")
+
+    <fieldset>
+        <legend>Log in Form</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.Nome)
+                @Html.TextBoxFor(m => m.Nome)
+                @Html.ValidationMessageFor(m => m.Nome)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Senha)
+                @Html.PasswordFor(m => m.Senha)
+                @Html.ValidationMessageFor(m => m.Senha)
+            </li>            
+        </ol>
+        <input type="submit" value="Logar" />
+    </fieldset>
+    <p>
+        @Html.ActionLink("Registrar", "Registrar"), se você não possui uma conta.
+    </p>
+}

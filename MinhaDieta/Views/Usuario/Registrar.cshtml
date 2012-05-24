@@ -1,0 +1,39 @@
+@model MinhaDieta.Models.Usuario
+
+@{
+    ViewBag.Title = "Registrar";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>Crie uma nova conta no Minha Dieta.</h2>
+</hgroup>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@using (Html.BeginForm((string)ViewBag.FormAction, "Usuario")) {
+    @Html.ValidationSummary(true, "Ocorreu um erro ao tentar registrar o usuário. Por favor tente novamente.")
+
+    <fieldset>
+        <legend>Registration Form</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.Nome)
+                @Html.TextBoxFor(m => m.Nome)
+                @Html.ValidationMessageFor(m => m.Nome)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email)
+                @Html.ValidationMessageFor(m => m.Email)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Senha)
+                @Html.PasswordFor(m => m.Senha)
+                @Html.ValidationMessageFor(m => m.Senha)
+            </li>            
+        </ol>
+        <input type="submit" value="Registrar" />
+    </fieldset>
+}
