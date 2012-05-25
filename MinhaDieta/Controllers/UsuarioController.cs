@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using MinhaDieta.Models;
+using MinhaDieta.Models.DAL;
+using MinhaDieta.Models.Entidades;
+using MinhaDieta.Models.ViewModel;
 
 namespace MinhaDieta.Controllers
 {
@@ -12,7 +14,20 @@ namespace MinhaDieta.Controllers
     [Authorize]
     public class UsuarioController : Controller
     {
-        
+        UsuarioRepository rep;
+
+        public UsuarioController() 
+        {
+            rep = new UsuarioRepository();
+        }
+
+        [Authorize]
+        public ActionResult Dashboard() 
+        {
+            return View();
+        }
+
+
         [AllowAnonymous]
         public ActionResult Login()
         {
@@ -21,14 +36,11 @@ namespace MinhaDieta.Controllers
                
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Login(Usuario model, string returnUrl)
+        public ActionResult Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
-            {
-
-                //TODO: método para validar o login do usuario
-                // model.Nome, model.Senha
-                if (true)
+            {                
+                if (rep.ValidarLogin(model.Nome, model.Senha))
                 {
                     FormsAuthentication.SetAuthCookie(model.Nome, false);
                     if (Url.IsLocalUrl(returnUrl))
@@ -37,12 +49,12 @@ namespace MinhaDieta.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Inicio");
+                        return RedirectToAction("Dashboard", "Usuario");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                    ModelState.AddModelError("", "O usuário ou a senha informados estão incorretos.");
                 }
             }
             
@@ -64,22 +76,24 @@ namespace MinhaDieta.Controllers
                 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Registrar(Usuario model)
+        public ActionResult Registrar(RegiostroViewModel model)
         {
             if (ModelState.IsValid)
             {
+                Usuario usuario = new Usuario();
+                usuario.Nome = model.Nome;
+                usuario.Email = model.Email;
+                usuario.Senha = model.Senha;
+                usuario.Altura = model.Altura;
+                usuario.Peso = model.Peso;
+                usuario.DataNascimento = model.DataNascimento;
+                rep.Salvar(usuario);
 
-                //TODO: Método para criar o usuario no banco
+                FormsAuthentication.SetAuthCookie(model.Nome, createPersistentCookie: false);
 
-
-                //FormsAuthentication.SetAuthCookie(model.UserName, createPersistentCookie: false);
-
-                return RedirectToAction("Index", "Inicio");
-
-                //ModelState.AddModelError("", ErrorCodeToString(createStatus));
-
+                return RedirectToAction("Dashboard", "Usuario");
             }
-            
+                        
             return View(model);
         }
                                 
@@ -105,18 +119,20 @@ namespace MinhaDieta.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public JsonResult JsonLogin(Usuario model, string returnUrl)
+        public JsonResult JsonLogin(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(model.Nome, model.Senha))
+                UsuarioRepository rep = new UsuarioRepository();
+
+                if (rep.ValidarLogin(model.Nome, model.Senha))
                 {
                     FormsAuthentication.SetAuthCookie(model.Nome, false);
                     return Json(new { success = true, redirect = returnUrl });
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                    ModelState.AddModelError("", "O usuário ou a senha informados estão incorretos.");
                 }
             }
 
@@ -126,23 +142,21 @@ namespace MinhaDieta.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public JsonResult JsonRegister(Usuario model)
+        public JsonResult JsonRegistrar(RegiostroViewModel model)
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
-                //MembershipCreateStatus createStatus;
-                //Membership.CreateUser(model.UserName, model.Password, model.Email, passwordQuestion: null, passwordAnswer: null, isApproved: true, providerUserKey: null, status: out createStatus);
+                Usuario usuario = new Usuario();
+                usuario.Nome = model.Nome;
+                usuario.Email = model.Email;
+                usuario.Senha = model.Senha;
+                usuario.Altura = model.Altura;
+                usuario.Peso = model.Peso;
+                usuario.DataNascimento = model.DataNascimento;
+                rep.Salvar(usuario);
 
-                if (true)
-                {
-                    FormsAuthentication.SetAuthCookie(model.Nome, createPersistentCookie: false);
-                    return Json(new { success = true });
-                }
-                else
-                {
-                    ModelState.AddModelError("", "");
-                }
+                FormsAuthentication.SetAuthCookie(model.Nome, createPersistentCookie: false);
+                return Json(new { success = true });
             }
 
             // If we got this far, something failed

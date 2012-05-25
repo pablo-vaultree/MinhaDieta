@@ -1,12 +1,11 @@
-@model MinhaDieta.Models.Usuario
+@model MinhaDieta.Models.ViewModel.RegiostroViewModel
 
 @{
     ViewBag.Title = "Registrar";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Crie uma nova conta no Minha Dieta.</h2>
+<hgroup class="title">    
+    <h2>Crie uma nova conta no Minha Dieta:</h2>
 </hgroup>
 
 <script src="~/Scripts/jquery.validate.min.js"></script>
@@ -16,7 +15,7 @@
     @Html.ValidationSummary(true, "Ocorreu um erro ao tentar registrar o usuário. Por favor tente novamente.")
 
     <fieldset>
-        <legend>Registration Form</legend>
+        <legend>Registrar nova conta</legend>
         <ol>
             <li>
                 @Html.LabelFor(m => m.Nome)
@@ -32,7 +31,27 @@
                 @Html.LabelFor(m => m.Senha)
                 @Html.PasswordFor(m => m.Senha)
                 @Html.ValidationMessageFor(m => m.Senha)
+            </li>  
+            <li>
+                @Html.LabelFor(m => m.DataNascimento)
+                @Html.TextBoxFor(m => m.DataNascimento)
+                @Html.ValidationMessageFor(m => m.DataNascimento)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Peso)
+                @Html.TextBoxFor(m => m.Peso)
+                @Html.ValidationMessageFor(m => m.Peso)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Altura)
+                @Html.TextBoxFor(m => m.Altura)
+                @Html.ValidationMessageFor(m => m.Altura)
             </li>            
+            <li>
+                @Html.LabelFor(m => m.Genero)
+                @Html.TextBoxFor(m => m.Genero)
+                @Html.ValidationMessageFor(m => m.Genero)
+            </li>      
         </ol>
         <input type="submit" value="Registrar" />
     </fieldset>

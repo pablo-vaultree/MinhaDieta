@@ -1,7 +1,14 @@
 ﻿@if (!Request.IsAuthenticated) 
 {
      <ul>
-        <li>@Html.ActionLink("Registrar", "Registrar", "Usuario", routeValues: null, htmlAttributes: new { id = "registrarLink", data_dialog_title = "Registro" })</li>
-        <li>@Html.ActionLink("Logar", "Login", "Registrar", routeValues: null, htmlAttributes: new { id = "loginLink", data_dialog_title = "Login" })</li>
+        <li>@Html.ActionLink("Registrar", "Registrar", "Usuario", routeValues: null, htmlAttributes: new { id = "registrarLink", data_dialog_title = "Registrar" })</li>
+        <li>@Html.ActionLink("Logar", "Login", "Usuario", routeValues: null, htmlAttributes: new { id = "loginLink", data_dialog_title = "Login" })</li>
+    </ul>
+}
+else
+{
+    <ul>
+        <li>Bem vindo(a), @Context.User.Identity.Name</li>
+        <li>@Html.ActionLink("Sair", "LogOff", "Usuario")</li>
     </ul>
 } 

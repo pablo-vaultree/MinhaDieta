@@ -4,52 +4,27 @@
 
 @section featured {
 <section class="featured">
-    <div class="content-wrapper">
-        <hgroup class="title">
-            <h1>@ViewBag.Title.</h1>            
-        </hgroup>
-        <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin luctus tincidunt justo nec tempor. 
-            Aliquam erat volutpat. Fusce facilisis ullamcorper consequat. Vestibulum non sapien lectus. Nam 
-            mi augue, posuere at tempus vel, dignissim vitae nulla. Nullam at quam eu sapien mattis ultrices. 
-            Quisque quis leo mi, at lobortis dolor. Nullam scelerisque facilisis placerat. Fusce a augue 
-            erat, malesuada euismod dui. Duis iaculis risus id felis volutpat elementum. Fusce blandit iaculis 
-            quam a cursus. Cras varius tincidunt cursus. Morbi justo eros, adipiscing ac placerat sed, posuere 
-            et mi. Suspendisse vulputate viverra aliquet. Duis non enim a nibh consequat mollis ac tempor 
-            lorem. Phasellus elit leo, semper eu luctus et, suscipit at lacus. In hac habitasse platea 
-            dictumst. <span class="highlight">Duis dignissim justo sit amet nulla pulvinar sodales.</span>                        
-        </p>
+    <div class="content-wrapper">        
+        <p>                
+            Mude sua alimentação!       
+        </p>        
     </div>
 </section>
 }
 
-<h3>Aqui você poderá:</h3>
-
 <ol class="round">
     <li class="one">
-        <h5>Item um</h5>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin luctus tincidunt justo nec tempor. 
-            Aliquam erat volutpat. Fusce facilisis ullamcorper consequat. Vestibulum non sapien lectus. Nam 
-            mi augue, posuere at tempus vel, dignissim vitae nulla. Nullam at quam eu sapien mattis ultrices. 
-            Quisque quis leo mi, at lobortis dolor.
+        <h5>Analyze Your Food</h5>
+            Minha dieta shows you how your food choices compare to national guidelines. Set your eating goals and track your progress.
     </li>
-    <li class="two">
-        <h5>Dois</h5>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin luctus tincidunt justo nec tempor. 
-            Aliquam erat volutpat. Fusce facilisis ullamcorper consequat. Vestibulum non sapien lectus. Nam 
-            mi augue, posuere at tempus vel, dignissim vitae nulla. Nullam at quam eu sapien mattis ultrices. 
-            Quisque quis leo mi, at lobortis dolor.
-    </li>
-    <li class="three">
-        <h5>3</h5>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin luctus tincidunt justo nec tempor. 
-            Aliquam erat volutpat. Fusce facilisis ullamcorper consequat. Vestibulum non sapien lectus. Nam 
-            mi augue, posuere at tempus vel, dignissim vitae nulla. Nullam at quam eu sapien mattis ultrices. 
-            Quisque quis leo mi, at lobortis dolor.
-    </li>
+    <li class="two">        
+        <h5>Meet your goals</h5>
+            Set your eating and activity goals and track your progress. Use eaTracker to post pictures or quotes to keep you motivated and determined to succeed.
+    </li>        
 </ol>
+<h2>@Html.ActionLink("Crie sua conta agora!", "Registrar", "Usuario", routeValues: null, htmlAttributes: new { id = "registrarLink", data_dialog_title = "Registrar" })</h2>                       
 
-<section class="features">
+@*<section class="features">
     <section class="feature">
         <img src="~/Images/aspNetHome.png" alt="" />
         <h3>Home of ASP.NET</h3>
@@ -77,4 +52,4 @@
             explore offerings from many providers.
         </p>
     </section>
-</section>
+</section>*@
