@@ -1,0 +1,53 @@
+﻿@model MinhaDieta.Models.ViewModel.CadastroAlimentoViewModel
+
+@{
+    ViewBag.Title = "Editar Alimento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Editar Alimento</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Editar Alimento</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Nome)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Nome)
+            @Html.ValidationMessageFor(model => model.Nome)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Quantidade)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Quantidade)
+            @Html.ValidationMessageFor(model => model.Quantidade)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ValorCalorico)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ValorCalorico)
+            @Html.ValidationMessageFor(model => model.ValorCalorico)
+        </div>
+
+        <p>
+            <input type="submit" value="Editar" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Voltar para a lista", "Index")
+</div>

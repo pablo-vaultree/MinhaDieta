@@ -1,11 +1,12 @@
 ﻿@if (!Request.IsAuthenticated) 
 {     
-    <li>@Html.ActionLink("Inicio", "Index", "Inicio")</li>
-    <li>@Html.ActionLink("Sobre", "Sobre", "Inicio")</li>                                
+     <li>@Html.ActionLink("Inicio", "Index", "Inicio")</li>    
 }
 else
 {
-     <li>@Html.ActionLink("Alimentos", "Cadastrar", "Alimento")</li>
-     <li>@Html.ActionLink("Refeições", "Cadastrar", "Refeicao")</li> 
-     <li>@Html.ActionLink("Metas", "Cadastrar", "Meta")</li> 
+     <li>@Html.ActionLink("Alimentos", "Index", "Alimento")</li>
+     <li>@Html.ActionLink("Refeições", "Index", "Refeicao")</li> 
+     <li>@Html.ActionLink("Medidas", "PrimeirasMedidas", "Medida")</li> 
 } 
+
+<li>@Html.ActionLink("Sobre", "Sobre", "Inicio")</li>                                

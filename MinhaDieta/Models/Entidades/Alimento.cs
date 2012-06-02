@@ -1,30 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
 namespace MinhaDieta.Models.Entidades
 {
-    public class Usuario
+    public class Alimento
     {
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [StringLength(128)]
         public string Nome { get; set; }
 
         [Required]
-        public string Senha { get; set; }
+        public decimal Quantidade { get; set; }
 
         [Required]
-        public DateTime DataNascimento { get; set; }
+        public decimal ValorCalorico { get; set; }
 
-        [Required]
-        public string Genero { get; set; }
-
-        [Required]
-        public string Email { get; set; }
-    }   
+        public virtual ICollection<Refeicao> Refeicoes { get; set; }
+    }
 }

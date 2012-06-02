@@ -16,33 +16,40 @@ namespace MinhaDieta.Models.DAL
             db = new MinhaDietaContext();
         }
 
-        public void Salvar(Usuario usuario) 
+        public void Adicionar(Usuario usuario) 
         {
             db.Usuarios.Add(usuario);
+            this.Salvar();
+        }
+
+        public void Salvar() 
+        {            
             db.SaveChanges();
         }
 
         public void Alterar(Usuario usuario)
         {
             db.Entry(usuario).State = EntityState.Modified;
-            db.SaveChanges();
-
+            this.Salvar();
         }
 
-        public Usuario BuscarUsuarioPeloId(int id)
+        public Usuario BuscarPeloId(int id)
         {
-            return db.Usuarios.Where(u => u.UsuarioID == id).SingleOrDefault();
+            return db.Usuarios.Where(u => u.Id  == id).SingleOrDefault();
         }
 
-        public Usuario BuscarUsuarioPeloNome(string nome)
+        public Usuario BuscarPeloNome(string nome)
         {
             return db.Usuarios.Where(u => u.Nome.Equals(nome)).SingleOrDefault();
         }
 
+
         public bool ValidarLogin(string nome, string senha)
         {
-            Usuario usuario = db.Usuarios.Where(u => u.Nome.Equals(nome)
-                                           && u.Senha.Equals(senha)).SingleOrDefault();
+            Usuario usuario = db.Usuarios
+                                .Where(u => u.Nome.Equals(nome)
+                                       && u.Senha.Equals(senha))
+                                .SingleOrDefault();
 
             return usuario != null ? true : false;
         }

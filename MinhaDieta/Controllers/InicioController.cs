@@ -10,6 +10,9 @@ namespace MinhaDieta.Controllers
     {
         public ActionResult Index()
         {
+            if (Request.IsAuthenticated)
+                return RedirectToAction("Dashboard", "Usuario");
+
             return View();
         }
 

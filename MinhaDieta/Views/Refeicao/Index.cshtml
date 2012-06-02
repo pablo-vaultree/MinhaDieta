@@ -1,0 +1,62 @@
+﻿@model MinhaDieta.Models.ViewModel.RefeicaoViewModel
+
+@{
+    ViewBag.Title = "Refeições";
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+<dashboard>
+    
+@using (Html.BeginForm("Salvar", "Refeicao")) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Nova refeição</legend>
+
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.Data)
+                @Html.TextBoxFor(m => m.Data)
+                @Html.ValidationMessageFor(m => m.Data)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Alimentos)                
+                @Html.ListBoxFor(m => m.Alimentos, Model.SelectAlimentos)
+                @Html.ValidationMessageFor(m => m.Alimentos)
+            </li>
+        </ol>        
+        
+        <p>
+            <input type="submit" value="Salvar" />
+        </p>
+    </fieldset>
+}
+</dashboard>
+
+<aside>
+    <h3>Refeições anteriores</h3>
+    <p>
+        Veja suas refeições:
+    </p>
+    
+    <ul>
+    @foreach (var item in Model.Refeicoes) {        
+        <li>@Html.ActionLink(item.Data.ToString(), "Editar", new { id=item.Id })</li>        
+    }                    
+    </ul>
+
+</aside>
+
+
+<script>
+    $('#Data')
+        .datepicker
+        ({
+            changeYear: true,
+            minDate: "-50Y",
+            maxDate: "0",
+            yearRange: "c-50:c+0"
+        });
+</script>

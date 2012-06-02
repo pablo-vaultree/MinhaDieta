@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MinhaDieta.Models.ViewModel
 {
@@ -20,7 +21,10 @@ namespace MinhaDieta.Models.ViewModel
     }
 
     public class RegiostroViewModel
-    {        
+    {
+        [HiddenInput(DisplayValue = false)]
+        public int Id { get; set; }
+
         [DataType(DataType.Text)]
         [Display(Name = "Nome")]
         [Required(ErrorMessage = "Informe o nome.")]
@@ -30,7 +34,7 @@ namespace MinhaDieta.Models.ViewModel
         [Display(Name = "Senha")]        
         [Required(ErrorMessage = "Informe a senha.")]
         public string Senha { get; set; }
-
+        
         [DataType(DataType.Date, ErrorMessage = "Informe uma data de nascimento válida.")]
         [Display(Name = "Data de nascimento")]
         [Required(ErrorMessage = "Informe a data de nascimento.")]
@@ -48,7 +52,7 @@ namespace MinhaDieta.Models.ViewModel
         [Display(Name = "Peso")]
         [Required(ErrorMessage = "Informe o peso.")]
         public decimal Peso { get; set; }
-
+        
         [DataType(DataType.EmailAddress, ErrorMessage = "Informe um email válido.")]
         [Display(Name = "Email")]
         [Required(ErrorMessage = "Informe o email")]

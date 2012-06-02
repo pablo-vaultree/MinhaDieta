@@ -43,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
@@ -132,14 +135,26 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AlimentoController.cs" />
+    <Compile Include="Controllers\MedidaController.cs" />
+    <Compile Include="Controllers\RefeicaoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DAL\AlimentoRepository.cs" />
+    <Compile Include="Models\DAL\RefeicaoRepository.cs" />
+    <Compile Include="Models\DAL\MedidaRepository.cs" />
     <Compile Include="Models\DAL\MinhaDietaContext.cs" />
     <Compile Include="Models\DAL\UsuarioRepository.cs" />
+    <Compile Include="Models\Entidades\Alimento.cs" />
+    <Compile Include="Models\Entidades\Medida.cs" />
+    <Compile Include="Models\Entidades\Refeicao.cs" />
     <Compile Include="Models\Entidades\Usuario.cs" />
+    <Compile Include="Models\ViewModel\AlimentoViewModels.cs" />
+    <Compile Include="Models\ViewModel\RefeicaoViewModels.cs" />
+    <Compile Include="Models\ViewModel\MedidaViewModels.cs" />
     <Compile Include="Models\ViewModel\UsuarioViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -233,6 +248,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Alimento\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Medida\PrimeirasMedidas.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Alimento\Criar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Alimento\Editar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Refeicao\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Refeicao\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Refeicao\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Refeicao\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Refeicao\Delete.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

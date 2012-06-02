@@ -11,6 +11,8 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
+
+
 @using (Html.BeginForm((string)ViewBag.FormAction, "Usuario")) {
     @Html.ValidationSummary(true, "Ocorreu um erro ao tentar registrar o usuário. Por favor tente novamente.")
 
@@ -36,23 +38,28 @@
                 @Html.LabelFor(m => m.DataNascimento)
                 @Html.TextBoxFor(m => m.DataNascimento)
                 @Html.ValidationMessageFor(m => m.DataNascimento)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Peso)
-                @Html.TextBoxFor(m => m.Peso)
-                @Html.ValidationMessageFor(m => m.Peso)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Altura)
-                @Html.TextBoxFor(m => m.Altura)
-                @Html.ValidationMessageFor(m => m.Altura)
             </li>            
             <li>
                 @Html.LabelFor(m => m.Genero)
-                @Html.TextBoxFor(m => m.Genero)
+                <select name="Genero" id="Genero">
+                    <option value=""></option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                </select>
                 @Html.ValidationMessageFor(m => m.Genero)
             </li>      
         </ol>
         <input type="submit" value="Registrar" />
     </fieldset>
 }
+
+<script>
+    $('#DataNascimento')
+        .datepicker
+        ({
+            changeYear: true,
+            minDate: "-50Y",
+            maxDate: "0",
+            yearRange: "c-50:c+0"
+        });
+</script>

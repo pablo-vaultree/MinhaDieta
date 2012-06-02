@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using AutoMapper;
 using MinhaDieta.Models.DAL;
 using MinhaDieta.Models.Entidades;
 using MinhaDieta.Models.ViewModel;
@@ -14,11 +15,11 @@ namespace MinhaDieta.Controllers
     [Authorize]
     public class UsuarioController : Controller
     {
-        UsuarioRepository rep;
+        UsuarioRepository repUsuario;
 
         public UsuarioController() 
         {
-            rep = new UsuarioRepository();
+            repUsuario = new UsuarioRepository();
         }
 
         [Authorize]
@@ -26,21 +27,52 @@ namespace MinhaDieta.Controllers
         {
             return View();
         }
+       
+        #region [ Registro ]
+        [AllowAnonymous]
+        public ActionResult Registrar()
+        {
+            return View();
+        }
 
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Registrar(RegiostroViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var _user = repUsuario.BuscarPeloNome(model.Nome);
+                if (_user != null)
+                {
+                    ModelState.AddModelError("Nome", "Nome de usuário já existente. Favor utilizar outro.");
+                    return View(model);
+                }
 
+                Usuario usuario = Mapper.Map<RegiostroViewModel, Usuario>(model);
+                repUsuario.Adicionar(usuario);
+
+                FormsAuthentication.SetAuthCookie(usuario.Nome, createPersistentCookie: false);
+                return RedirectToAction("PrimeirasMedidas", "Medida");
+            }
+
+            return View(model);
+        }
+        #endregion
+
+        #region [ Login ]
         [AllowAnonymous]
         public ActionResult Login()
         {
             return RetornaViewNoContexto();
         }
-               
+
         [AllowAnonymous]
         [HttpPost]
         public ActionResult Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
-            {                
-                if (rep.ValidarLogin(model.Nome, model.Senha))
+            {
+                if (repUsuario.ValidarLogin(model.Nome, model.Senha))
                 {
                     FormsAuthentication.SetAuthCookie(model.Nome, false);
                     if (Url.IsLocalUrl(returnUrl))
@@ -57,7 +89,7 @@ namespace MinhaDieta.Controllers
                     ModelState.AddModelError("", "O usuário ou a senha informados estão incorretos.");
                 }
             }
-            
+
             return View(model);
         }
         
@@ -67,36 +99,7 @@ namespace MinhaDieta.Controllers
 
             return RedirectToAction("Index", "Inicio");
         }
-        
-        [AllowAnonymous]
-        public ActionResult Registrar()
-        {
-            return RetornaViewNoContexto();
-        }
-                
-        [AllowAnonymous]
-        [HttpPost]
-        public ActionResult Registrar(RegiostroViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                Usuario usuario = new Usuario();
-                usuario.Nome = model.Nome;
-                usuario.Email = model.Email;
-                usuario.Senha = model.Senha;
-                usuario.Altura = model.Altura;
-                usuario.Peso = model.Peso;
-                usuario.DataNascimento = model.DataNascimento;
-                rep.Salvar(usuario);
-
-                FormsAuthentication.SetAuthCookie(model.Nome, createPersistentCookie: false);
-
-                return RedirectToAction("Dashboard", "Usuario");
-            }
-                        
-            return View(model);
-        }
-                                
+        #endregion        
 
         #region Métodos Para Javascript
         /// <summary>
@@ -134,29 +137,6 @@ namespace MinhaDieta.Controllers
                 {
                     ModelState.AddModelError("", "O usuário ou a senha informados estão incorretos.");
                 }
-            }
-
-            // If we got this far, something failed
-            return Json(new { errors = "" });
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        public JsonResult JsonRegistrar(RegiostroViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                Usuario usuario = new Usuario();
-                usuario.Nome = model.Nome;
-                usuario.Email = model.Email;
-                usuario.Senha = model.Senha;
-                usuario.Altura = model.Altura;
-                usuario.Peso = model.Peso;
-                usuario.DataNascimento = model.DataNascimento;
-                rep.Salvar(usuario);
-
-                FormsAuthentication.SetAuthCookie(model.Nome, createPersistentCookie: false);
-                return Json(new { success = true });
             }
 
             // If we got this far, something failed

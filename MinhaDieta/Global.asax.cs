@@ -9,13 +9,14 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using AutoMapper;
+using MinhaDieta.Models.ViewModel;
+using MinhaDieta.Models.Entidades;
 
 namespace MinhaDieta
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-
-    public class MvcApplication : System.Web.HttpApplication
+    
+    public class MinhaDieta : System.Web.HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
@@ -42,14 +43,20 @@ namespace MinhaDieta
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
-            // Use LocalDB for Entity Framework by default
-           // Database.DefaultConnectionFactory = new SqlConnectionFactory(ConfigurationManager.ConnectionStrings["connectionString"].ToString());
-
+            this.MapearObjetos();
+            
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
             BundleTable.Bundles.RegisterTemplateBundles();
+        }
+
+        private void MapearObjetos() 
+        {
+            Mapper.CreateMap<Alimento, CadastroAlimentoViewModel>();
+            Mapper.CreateMap<CadastroAlimentoViewModel, Alimento>();
+            Mapper.CreateMap<RegiostroViewModel, Usuario>();
+            Mapper.CreateMap<MedidaViewModel, Medida>();
         }
     }
 }
