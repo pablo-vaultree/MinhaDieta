@@ -20,7 +20,8 @@ namespace MinhaDieta.Controllers
 
         public AlimentoController() 
         {
-            repAlimento = new AlimentoRepository();
+            MinhaDietaContext db = new MinhaDietaContext();
+            repAlimento = new AlimentoRepository(db);
         }
 
         public ActionResult Index() 
@@ -72,6 +73,12 @@ namespace MinhaDieta.Controllers
             var alimento = repAlimento.BuscarPorId(Id);
             repAlimento.Excluir(alimento);
             return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            repAlimento.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

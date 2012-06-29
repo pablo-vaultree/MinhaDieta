@@ -7,13 +7,17 @@ using MinhaDieta.Models.Entidades;
 
 namespace MinhaDieta.Models.DAL
 {
-    public class UsuarioRepository
+    public class UsuarioRepository : IDisposable
     {
-        MinhaDietaContext db;
-
-        public UsuarioRepository() 
+        private MinhaDietaContext db;
+        public UsuarioRepository(MinhaDietaContext _db) 
         {
-            db = new MinhaDietaContext();
+            db = _db;
+        }
+
+        public void Salvar()
+        {
+            db.SaveChanges();
         }
 
         public void Adicionar(Usuario usuario) 
@@ -21,12 +25,7 @@ namespace MinhaDieta.Models.DAL
             db.Usuarios.Add(usuario);
             this.Salvar();
         }
-
-        public void Salvar() 
-        {            
-            db.SaveChanges();
-        }
-
+       
         public void Alterar(Usuario usuario)
         {
             db.Entry(usuario).State = EntityState.Modified;
@@ -54,5 +53,10 @@ namespace MinhaDieta.Models.DAL
             return usuario != null ? true : false;
         }
 
+
+        public void Dispose()
+        {
+            db.Dispose();
+        }
     }
 }

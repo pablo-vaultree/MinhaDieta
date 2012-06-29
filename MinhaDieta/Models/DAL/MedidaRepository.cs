@@ -7,13 +7,18 @@ using MinhaDieta.Models.Entidades;
 
 namespace MinhaDieta.Models.DAL
 {
-    public class MedidaRepository
-    {
-        MinhaDietaContext db;
-
-        public MedidaRepository() 
+    public class MedidaRepository :  IDisposable
+    {        
+        
+        private MinhaDietaContext db;
+        public MedidaRepository(MinhaDietaContext _db) 
         {
-            db = new MinhaDietaContext();
+            db = _db;
+        }
+
+        public void Salvar()
+        {
+            db.SaveChanges();
         }
 
         public void Adicionar(Medida medida) 
@@ -21,11 +26,6 @@ namespace MinhaDieta.Models.DAL
             db.Medidas.Add(medida);
             db.Entry(medida.Usuario).State = EntityState.Modified;
             this.Salvar();
-        }
-
-        public void Salvar() 
-        {            
-            db.SaveChanges();
         }
 
         public void Alterar(Medida medida)
@@ -41,7 +41,12 @@ namespace MinhaDieta.Models.DAL
         public Medida BuscarPeloId(int id)
         {
             return db.Medidas.Where(u => u.Id == id).SingleOrDefault();
-        }                
+        }
 
+
+        public void Dispose()
+        {
+            db.Dispose();
+        }
     }
 }

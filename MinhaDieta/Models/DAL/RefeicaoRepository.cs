@@ -9,17 +9,16 @@ namespace MinhaDieta.Models.DAL
 {
     public class RefeicaoRepository : IDisposable
     {
-        MinhaDietaContext db;
-
-        public RefeicaoRepository() 
+        private MinhaDietaContext db;
+        public RefeicaoRepository(MinhaDietaContext _db) 
         {
-            db = new MinhaDietaContext();
+            db = _db;
         }
 
         public void Salvar()
         {
             db.SaveChanges();
-        }
+        } 
 
         public void Inserir(Refeicao Refeicao) 
         {

@@ -1,0 +1,93 @@
+﻿@model MinhaDieta.Models.ViewModel.MedidaViewModel
+
+@{
+    ViewBag.Title = "Primeiras Medidas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Informe as suas Medidas</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+<content>
+    @using (Html.BeginForm("SalvarMedidas", "Medida")) {
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Salve as suas primeiras medidas:</legend>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Peso)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Peso)
+                @Html.ValidationMessageFor(model => model.Peso)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Altura)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Altura)
+                @Html.ValidationMessageFor(model => model.Altura)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Braco)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Braco)
+                @Html.ValidationMessageFor(model => model.Braco)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Quadril)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Quadril)
+                @Html.ValidationMessageFor(model => model.Quadril)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Abdomen)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Abdomen)
+                @Html.ValidationMessageFor(model => model.Abdomen)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Pescoco)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Pescoco)
+                @Html.ValidationMessageFor(model => model.Pescoco)
+            </div>
+
+            <p>
+                @Html.HiddenFor(model => model.Id)
+                <input type="submit" value="Salvar Medidas" />
+            </p>
+        </fieldset>
+    }
+</content>
+
+@if (Model != null)
+{
+    <aside>
+        <h3>Medidas registradas</h3>
+        <p>
+            Veja suas medidas registradas
+        </p>
+        <ul>
+            <li>Altura | Peso </li>
+
+            @foreach (var medida in Model.Medidas)
+            {
+                <li>@medida.Altura | @medida.Peso | @Html.ActionLink("Ver", "Visualizar", new {  Id = medida.Id  })</li>
+            }
+        </ul>
+    </aside>
+        
+}

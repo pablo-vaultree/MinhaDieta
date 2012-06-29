@@ -20,9 +20,10 @@ namespace MinhaDieta.Controllers
 
         public RefeicaoController() 
         {
-            repRefeicao = new RefeicaoRepository();
-            repAlimento = new AlimentoRepository();
-            repUsuario = new UsuarioRepository();
+            MinhaDietaContext db = new MinhaDietaContext();
+            repRefeicao = new RefeicaoRepository(db);
+            repAlimento = new AlimentoRepository(db);
+            repUsuario = new UsuarioRepository(db);
         }
 
         
@@ -30,38 +31,42 @@ namespace MinhaDieta.Controllers
         {
             RefeicaoViewModel viewmodel = new RefeicaoViewModel();
             viewmodel.Refeicoes = repRefeicao.BuscarTodos();
-            viewmodel.SelectAlimentos = this.BuscarSelectAlimentos();
+            var alimentos = repAlimento.BuscarTodos();
+            viewmodel.SelectAlimentos = new MultiSelectList(alimentos, "Id", "Nome", "");
             return View(viewmodel);
+        }
+
+        public ActionResult Visualizar(int id)
+        {
+            var refeicao = repRefeicao.BuscarPorId(id);                        
+            return View(refeicao);
         }
 
         [HttpPost]
         public ActionResult Salvar(RefeicaoViewModel model) 
-        {
+        {            
             if (ModelState.IsValid)
             {
-                var refeicao = Mapper.Map<RefeicaoViewModel, Refeicao>(model);
+                var refeicao = new Refeicao();
+                refeicao.Data = Convert.ToDateTime(model.Data);
+                var usuario = repUsuario.BuscarPeloNome(HttpContext.User.Identity.Name);
+                refeicao.Usuario = usuario;
+
+                foreach (int id in model.Alimentos)                
+                {
+                    var alimento = repAlimento.BuscarPorId(id);
+                    refeicao.Alimentos.Add(alimento);
+                }
                 repRefeicao.Inserir(refeicao);
                 return RedirectToAction("Index");
             }
 
             model.Refeicoes = repRefeicao.BuscarTodos();
-            model.SelectAlimentos = this.BuscarSelectAlimentos();
+            var alimentos = repAlimento.BuscarTodos();
+            model.SelectAlimentos = new MultiSelectList(alimentos, "Id", "Nome", "");
             return View("Index", model);
         }
-
-        private IEnumerable<SelectListItem> BuscarSelectAlimentos()
-        {
-            var alimentos = repAlimento.BuscarTodos();
-            List<SelectListItem> select = new List<SelectListItem>();
-            foreach (var alimento in alimentos)
-            {
-                SelectListItem item = new SelectListItem();
-                item.Text = alimento.Nome;
-                item.Value = alimento.Id.ToString();
-                select.Add(item);
-            }
-            return select.AsEnumerable();
-        }
+        
         
         protected override void Dispose(bool disposing)
         {

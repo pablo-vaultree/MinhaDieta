@@ -57,6 +57,7 @@ namespace MinhaDieta
             Mapper.CreateMap<CadastroAlimentoViewModel, Alimento>();
             Mapper.CreateMap<RegiostroViewModel, Usuario>();
             Mapper.CreateMap<MedidaViewModel, Medida>();
+            Mapper.CreateMap<Medida, MedidaViewModel>();
         }
     }
 }

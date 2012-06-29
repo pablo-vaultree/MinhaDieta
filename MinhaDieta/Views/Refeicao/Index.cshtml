@@ -43,7 +43,7 @@
     
     <ul>
     @foreach (var item in Model.Refeicoes) {        
-        <li>@Html.ActionLink(item.Data.ToString(), "Editar", new { id=item.Id })</li>        
+        <li>@Html.ActionLink(item.Data.ToString("d"), "Visualizar", new { id=item.Id })</li>        
     }                    
     </ul>
 
@@ -57,6 +57,7 @@
             changeYear: true,
             minDate: "-50Y",
             maxDate: "0",
-            yearRange: "c-50:c+0"
+            yearRange: "c-50:c+0",
+            dateFormat: "dd/mm/yy"
         });
 </script>

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MinhaDieta.Models.Entidades;
 
 namespace MinhaDieta.Models.ViewModel
 {
@@ -36,5 +37,7 @@ namespace MinhaDieta.Models.ViewModel
         [DataType(DataType.Text)]
         [Display(Name = "Pescoço")]                
         public decimal? Pescoco { get; set; }
+
+        public List<Medida> Medidas { get; set; }
     }    
 }

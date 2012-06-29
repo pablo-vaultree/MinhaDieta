@@ -1,0 +1,43 @@
+﻿@model MinhaDieta.Models.Entidades.Refeicao
+
+@{
+    ViewBag.Title = "Ver Refeição";
+}
+
+<h2>Refeição do dia @Model.Data.ToString("d")</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+<fieldset>
+    <legend></legend>
+        
+    <div class="editor-field">
+        <br />        
+        <table>
+            <thead>
+                <tr>
+                    <td><b>Alimento</b></td>
+                    <td><b>Quantidade</b></td>
+                    <td><b>Valor calorico</b></td>
+                </tr>
+            </thead>
+            <tbody>            
+            @foreach (var alimento in Model.Alimentos)
+            {
+                <tr>
+                    <td>@alimento.Nome</td>
+                    <td>@alimento.Quantidade</td>
+                    <td>@alimento.ValorCalorico</td>
+                </tr>                
+            }
+            </tbody>        
+
+        </table>
+        <br />
+    </div>        
+</fieldset>
+
+<div>
+    @Html.ActionLink("Voltar", "Index")
+</div>

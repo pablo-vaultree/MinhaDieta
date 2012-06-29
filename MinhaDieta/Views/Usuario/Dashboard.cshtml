@@ -1,4 +1,4 @@
-@model MinhaDieta.Models.ViewModel.RegiostroViewModel
+@model MinhaDieta.Models.ViewModel.DashboardViewModel
 
 @{
     ViewBag.Title = "Dashboard";
@@ -11,16 +11,18 @@
         Aliquam erat volutpat. Fusce facilisis ullamcorper consequat. Vestibulum non sapien lectus. Nam 
     </p>
 
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin luctus tincidunt justo nec tempor. 
-        Aliquam erat volutpat. Fusce facilisis ullamcorper consequat. Vestibulum non sapien lectus. Nam 
-        mi augue, posuere at tempus vel, dignissim vitae nulla. Nullam at quam eu sapien mattis ultrices. 
-    </p>
+    <p><b>Veja suas últimas refeições:</b></p>
+    @foreach (var item in Model.Refeicoes) {        
+        <li>@Html.ActionLink(item.Data.ToString("d"), "Visualizar", new { controller = "Refeicao", action = "Visualizar", id = item.Id })</li>        
+    }  
 
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin luctus tincidunt justo nec tempor. 
-        Aliquam erat volutpat. Fusce facilisis ullamcorper consequat. Vestibulum non sapien lectus. Nam 
-    </p>
+    <p><b>Veja suas últimas medidas:</b></p>
+    <li>Altura | Peso </li>
+
+    @foreach (var medida in Model.Medidas)
+    {
+        <li>@medida.Altura | @medida.Peso | @Html.ActionLink("Ver", "Visualizar", new { controller = "Medida", action = "Visualizar", id = medida.Id })</li>
+    }    
 </dashboard>
 
 <aside>

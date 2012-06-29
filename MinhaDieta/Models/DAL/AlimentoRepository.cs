@@ -7,20 +7,19 @@ using MinhaDieta.Models.Entidades;
 
 namespace MinhaDieta.Models.DAL
 {
-    public class AlimentoRepository
+    public class AlimentoRepository : IDisposable
     {
-        MinhaDietaContext db;
-
-        public AlimentoRepository() 
+        private MinhaDietaContext db;
+        public AlimentoRepository(MinhaDietaContext _db) 
         {
-            db = new MinhaDietaContext();
+            db = _db;
         }
 
         public void Salvar()
         {
             db.SaveChanges();
-        }
-
+        } 
+      
         public void Inserir(Alimento alimento) 
         {
             db.Alimentos.Add(alimento);
@@ -47,6 +46,11 @@ namespace MinhaDieta.Models.DAL
         public Alimento BuscarPorId(int id)
         {
             return db.Alimentos.Where(u => u.Id == id).SingleOrDefault();
-        }     
+        }
+
+        public void Dispose()
+        {
+            db.Dispose();
+        }
     }
 }

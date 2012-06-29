@@ -20,9 +20,9 @@ namespace MinhaDieta.Models.ViewModel
         
         [Display(Name = "Alimentos")]
         [Required(ErrorMessage = "Informe no minímo um alimento para cadastrar a refeição.")]
-        public List<Alimento> Alimentos { get; set; }
+        public int[] Alimentos { get; set; }
 
-        public IEnumerable<SelectListItem> SelectAlimentos { get; set; }      
+        public MultiSelectList SelectAlimentos { get; set; }      
         
         public List<Refeicao> Refeicoes { get; set; }      
     } 

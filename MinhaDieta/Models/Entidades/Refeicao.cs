@@ -8,6 +8,11 @@ namespace MinhaDieta.Models.Entidades
 {
     public class Refeicao
     {
+        public Refeicao() 
+        {
+            Alimentos = new List<Alimento>();
+        }
+
         [Key]
         public int Id { get; set; }
 

@@ -16,16 +16,24 @@ namespace MinhaDieta.Controllers
     public class UsuarioController : Controller
     {
         UsuarioRepository repUsuario;
+        RefeicaoRepository repRefeicao;
+        MedidaRepository repMedida;
 
         public UsuarioController() 
         {
-            repUsuario = new UsuarioRepository();
+            MinhaDietaContext db = new MinhaDietaContext();
+            repUsuario = new UsuarioRepository(db);
+            repRefeicao = new RefeicaoRepository(db);
+            repMedida = new MedidaRepository(db);
         }
 
         [Authorize]
         public ActionResult Dashboard() 
         {
-            return View();
+            DashboardViewModel model = new DashboardViewModel();
+            model.Medidas = repMedida.BuscarTodos();
+            model.Refeicoes = repRefeicao.BuscarTodos();
+            return View(model);
         }
        
         #region [ Registro ]
@@ -126,9 +134,8 @@ namespace MinhaDieta.Controllers
         {
             if (ModelState.IsValid)
             {
-                UsuarioRepository rep = new UsuarioRepository();
-
-                if (rep.ValidarLogin(model.Nome, model.Senha))
+                
+                if (repUsuario.ValidarLogin(model.Nome, model.Senha))
                 {
                     FormsAuthentication.SetAuthCookie(model.Nome, false);
                     return Json(new { success = true, redirect = returnUrl });
@@ -143,5 +150,11 @@ namespace MinhaDieta.Controllers
             return Json(new { errors = "" });
         }
         #endregion        
+        
+        protected override void Dispose(bool disposing)
+        {
+            repUsuario.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

@@ -261,7 +261,7 @@ ol.round {
         }
 
 /* content */
-article, dashboard {
+article, dashboard, content {
     float: left;
     width: 70%;
 }
